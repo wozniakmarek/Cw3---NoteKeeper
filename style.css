@@ -1,0 +1,19 @@
+*{
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    color: white;
+    width: 100%;
+    background-color:#800606;
+    padding: 20px;
+    letter-spacing:5px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    text-align: center;
+}
+
+#title {
+    width: 50%;
+}
