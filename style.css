@@ -3,17 +3,63 @@
     margin: 0;
     padding: 0;
 }
+body{
+    background-color: #edcece;
+}
 header {
     color: white;
     width: 100%;
-    background-color:#800606;
-    padding: 20px;
     letter-spacing:5px;
     padding-top: 5%;
     padding-bottom: 5%;
     text-align: center;
+    background-color: #edcece;
+}
+#title {
+    width: 100%;
+}
+aside{
+    float:left;
+    width: 30%;
+    height: 450px;
+    background-color: antiquewhite;
+    }
+content{
+    float:left;
+    width: 66%;
+    background-color: #efc5b5;
+    font-size:xx-large;
+    padding:2%;
+}
+content p{
+    width: 60%;
+}
+button {
+    color: white;
+    background: darkred;
+    border: none;
+    font-size:xx-large;
+    padding: 1%;
+    float:right;
+    padding:2%
+}
+::placeholder {
+    font-family: sans-serif;
+}
+footer{
+
 }
 
-#title {
-    width: 50%;
+textarea {
+    font-size: large;
+    padding: 10px;
+    margin: 10px 10px 10px 0px;
 }
+
+input{
+    font-size: large;
+    padding: 10px;
+    margin: 10px 10px 10px 10px;
+}
+
+
