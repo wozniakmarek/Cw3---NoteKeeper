@@ -19,9 +19,9 @@ header {
     width: 100%;
 }
 aside{
-    float:left;
+    float:right;
     width: 30%;
-    height: 450px;
+    height: auto;
     background-color: antiquewhite;
     }
 content{
@@ -45,9 +45,6 @@ button {
 }
 ::placeholder {
     font-family: sans-serif;
-}
-footer{
-
 }
 
 textarea {
