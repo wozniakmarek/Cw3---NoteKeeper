@@ -22,14 +22,23 @@ window.requestAnimationFrame(showTextTime);
 const localStorageNotesKey = 'notes';
 const notes = [];
 
-document.querySelector('#noteAdd').addEventListener('click', onNewNote)
+document.querySelector('#noteAdd').addEventListener('click', onNewNote);
+
+function removeNote(e) {
+    let noteToRemove = e.target.parentNode;
+    noteToRemove.parentNode.removeChild(noteToRemove);
+}
 
 function onNewNote() {
     const title = document.querySelector('#noteTitle').value;
     const content = document.querySelector('#noteContent').value;
+    const color = document.querySelector('#color').value;
+    //const pin = document.querySelector('#pinned').;
     const note = {
         title: title,
         content: content,
+        colour: color,
+        //pinned: pin,
         createDate: new Date(),
     };
     
@@ -53,16 +62,20 @@ for (const note of converted) {
     const htmlSection = document.createElement('section');
     const htmlTitle = document.createElement('h1');
     const htmlContent = document.createElement('p');
-    const htmlDate = document.createElement('h4');
+    const htmlData = document.createElement('time');
+    const htmlButton = document.createElement('button');
 
-    htmlSection.classList.add('note');
+    htmlSection.style.backgroundColor = note.colour;
+
     htmlTitle.innerHTML = note.title;
     htmlContent.innerHTML = note.content;
-    htmlDate.innerHTML = note.createDate.toLocaleString();
-
+    htmlData.innerHTML = note.createDate.toLocaleString();
+    htmlButton.innerHTML = 'Remove';
+    htmlButton.onclick = ((e)=>{removeNote(e)});
     htmlSection.appendChild(htmlTitle);
     htmlSection.appendChild(htmlContent);
-    htmlSection.appendChild(htmlDate);
+    htmlSection.appendChild(htmlData);
+    htmlSection.appendChild(htmlButton);
 
     asidenotes.appendChild(htmlSection);
     

@@ -19,16 +19,22 @@
 
     </aside>
     <content>
-        <p>Tytuł: <input type="text" name="" id="noteTitle" placeholder="Tytuł twojej notatki..." required>
-        <button id="noteAdd">Add a new note</button></p>
-        <p>Notatka: <br><textarea name="" id="noteContent" cols="55" rows="10" placeholder="Tutaj wpisz notatkę.." required></textarea></p>
-        <div class="more-options">
+        <p>Tytuł: <input type="text" name="" id="noteTitle" placeholder="Tytuł twojej notatki..." required></p>
+        <button id="noteAdd">Add a new note</button>
+        <p>Notatka: <br><textarea name="" id="noteContent" cols="60" rows="10" placeholder="Tutaj wpisz notatkę.." required></textarea></p>
+        <div class="opcions">
             <div class="select-bgcolor">
-                <select name="Color" id="selected" >
+                <select name="Color" id="color" >
                     <option value="red">Red</option>
                     <option value="blue">Blue</option>
-                    <option value="red">Yellow</option>
+                    <option value="yellow">Yellow</option>
                 </select>  
+            </div>
+            <div>
+                <br>
+                <p>Przypnij: <input type="checkbox" id="pinned"></p>
+            </div>
+
         </div> 	
     </content>
     <footer>
