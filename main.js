@@ -19,6 +19,13 @@ function showTextTime() {
 }
 window.requestAnimationFrame(showTextTime);
 
+
+
+
+
+
+
+
 const localStorageNotesKey = 'notes';
 const notes = [];
 
@@ -28,18 +35,21 @@ function onNewNote() {
     const title = document.querySelector('#noteTitle').value;
     const content = document.querySelector('#noteContent').value;
     const color = document.querySelector('#color').value;
+    const pin = document.querySelector('#pinned').checked;
     const note = {
-        id: "" + Date.now(),
+        id: Math.random()*10000,
         title: title,
         content: content,
         colour: color,
-        pinned: false,
+        pinned: pin,
         createDate: new Date(),
     };
     
 
 notes.push(note);
 console.log(note);
+
+
 
 localStorage.setItem(localStorageNotesKey, JSON.stringify(notes));
 
@@ -51,9 +61,11 @@ const converted = notesFromStorage.map( note => {
 });
 
 const asidenotes = document.querySelector('aside');
-asidenotes.innerHTML = '';
+asidenotes.innerHTML = 'Przypięte:';
 
 for (const note of converted) {
+    if(note.pinned === true) {
+        
     const htmlSection = document.createElement('section');
     const htmlTitle = document.createElement('h1');
     const htmlContent = document.createElement('p');
@@ -75,26 +87,42 @@ for (const note of converted) {
     htmlSection.appendChild(htmlButton);
 
     asidenotes.appendChild(htmlSection);
+    }
     
+}
+const mainnotes = document.querySelector('main');
+mainnotes.innerHTML = 'Nieprzypięte:';
+
+for(const note of converted) {
+    if(note.pinned === false) {
+        
+    const htmlSection = document.createElement('section');
+    const htmlTitle = document.createElement('h1');
+    const htmlContent = document.createElement('p');
+    const htmlData = document.createElement('time');
+    const htmlButton = document.createElement('button');
+
+    htmlSection.style.backgroundColor = note.colour;
+
+    htmlTitle.innerHTML = note.title;
+    htmlContent.innerHTML = note.content;
+    htmlData.innerHTML = note.createDate.toLocaleString();
+    htmlButton.innerHTML = 'Remove';
+    htmlButton.classList.add('remove');
+    htmlButton.onclick = ((id)=>{removeNote(id)});
+
+    htmlSection.appendChild(htmlTitle);
+    htmlSection.appendChild(htmlContent);
+    htmlSection.appendChild(htmlData);
+    htmlSection.appendChild(htmlButton);
+
+    mainnotes.appendChild(htmlSection);
+    }
 }
 function removeNote(id) {
     let noteToRemove = id.target.parentNode;
         noteToRemove.parentNode.removeChild(noteToRemove)
+        notes.splice(id,1)
 }
-/*const pinnedFirst = (a,b) =>{
-    if(a.pinned === b.pinned){
-        return 0;
-    }
-    else if( a.pinned === true && b.pinned === false)
-        return 1;
-    else{
-        return -1;
-    }
-}
-note.sort(pinnedFirst);
-*/
-const pinnedPost = notes.filter(id) => id.pinned);
-const unpinnedPost = notes.filter(id) => !id.pinned);
-
 
 }

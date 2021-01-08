@@ -20,10 +20,11 @@ header {
     width: 100%;
 }
 aside{
+
     float:right;
     background-color: antiquewhite;
-    min-width: 33%;
-    max-width: 33%;
+    min-width: 100%;
+    max-width: 100%;
     overflow-wrap: break-word;
     }
 content{
@@ -90,4 +91,16 @@ input[type=checkbox] {
     font-size:100%;
     margin-bottom: 10px;
     text-align: center;
+}
+main{
+    padding-top: 2%;
+    float:right;
+    background-color: antiquewhite;
+    min-width: 100%;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    }
+.contener{
+    float: right;
+    width: 33%;
 }
