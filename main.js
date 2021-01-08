@@ -22,23 +22,18 @@ window.requestAnimationFrame(showTextTime);
 const localStorageNotesKey = 'notes';
 const notes = [];
 
-document.querySelector('#noteAdd').addEventListener('click', onNewNote);
-
-function removeNote(e) {
-    let noteToRemove = e.target.parentNode;
-    noteToRemove.parentNode.removeChild(noteToRemove);
-}
+document.querySelector('#noteAdd').addEventListener('click', onNewNote)
 
 function onNewNote() {
     const title = document.querySelector('#noteTitle').value;
     const content = document.querySelector('#noteContent').value;
     const color = document.querySelector('#color').value;
-    //const pin = document.querySelector('#pinned').;
     const note = {
+        id: "" + Date.now(),
         title: title,
         content: content,
         colour: color,
-        //pinned: pin,
+        pinned: false,
         createDate: new Date(),
     };
     
@@ -71,7 +66,9 @@ for (const note of converted) {
     htmlContent.innerHTML = note.content;
     htmlData.innerHTML = note.createDate.toLocaleString();
     htmlButton.innerHTML = 'Remove';
-    htmlButton.onclick = ((e)=>{removeNote(e)});
+    htmlButton.classList.add('remove');
+    htmlButton.onclick = ((id)=>{removeNote(id)});
+
     htmlSection.appendChild(htmlTitle);
     htmlSection.appendChild(htmlContent);
     htmlSection.appendChild(htmlData);
@@ -80,4 +77,24 @@ for (const note of converted) {
     asidenotes.appendChild(htmlSection);
     
 }
+function removeNote(id) {
+    let noteToRemove = id.target.parentNode;
+        noteToRemove.parentNode.removeChild(noteToRemove)
+}
+/*const pinnedFirst = (a,b) =>{
+    if(a.pinned === b.pinned){
+        return 0;
+    }
+    else if( a.pinned === true && b.pinned === false)
+        return 1;
+    else{
+        return -1;
+    }
+}
+note.sort(pinnedFirst);
+*/
+const pinnedPost = notes.filter(id) => id.pinned);
+const unpinnedPost = notes.filter(id) => !id.pinned);
+
+
 }

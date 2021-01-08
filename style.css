@@ -82,7 +82,7 @@ select{
 input[type=checkbox] {
     transform: scale(2);
 }
-section button{
+.remove{
     float:right;
     background: white;
     border: none;
