@@ -123,6 +123,7 @@ function removeNote(id) {
     let noteToRemove = id.target.parentNode;
         noteToRemove.parentNode.removeChild(noteToRemove)
         notes.splice(id,1)
+        localStorage.setItem('notes',JSON.stringify(notes))
 }
 
 }
