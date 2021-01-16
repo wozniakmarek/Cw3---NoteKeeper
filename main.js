@@ -88,12 +88,6 @@ for (const note of converted) {
 
     asidenotes.appendChild(htmlSection);
     }
-    
-}
-const mainnotes = document.querySelector('main');
-mainnotes.innerHTML = 'Nieprzypięte:';
-
-for(const note of converted) {
     if(note.pinned === false) {
         
     const htmlSection = document.createElement('section');
