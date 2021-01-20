@@ -20,14 +20,8 @@ function showTextTime() {
 window.requestAnimationFrame(showTextTime);
 
 
-
-
-
-
-
-
 const localStorageNotesKey = 'notes';
-const notes = [];
+let notes = [];
 
 document.querySelector('#noteAdd').addEventListener('click', onNewNote)
 
@@ -43,81 +37,82 @@ function onNewNote() {
         colour: color,
         pinned: pin,
         createDate: new Date(),
-    };
-    
+    }
 
-notes.push(note);
-console.log(note);
+    notes.push(note);
+    renderNote(note);
+    // console.log(note);
 
-
-
-localStorage.setItem(localStorageNotesKey, JSON.stringify(notes));
-
-const notesFromStorage = JSON.parse(localStorage.getItem(localStorageNotesKey));
-
-const converted = notesFromStorage.map( note => {
-    note.createDate = new Date(note.createDate);
-    return note;
-});
+    localStorage.setItem(localStorageNotesKey, JSON.stringify(notes));
+}
 
 const asidenotes = document.querySelector('aside');
 asidenotes.innerHTML = 'Przypięte:';
+const mainnotes = document.querySelector('main');
+mainnotes.innerHTML = 'Nieprzypięte:';
+CreateNote();
 
-for (const note of converted) {
-    if(note.pinned === true) {
-        
-    const htmlSection = document.createElement('section');
-    const htmlTitle = document.createElement('h1');
-    const htmlContent = document.createElement('p');
-    const htmlData = document.createElement('time');
-    const htmlButton = document.createElement('button');
-
-    htmlSection.style.backgroundColor = note.colour;
-
-    htmlTitle.innerHTML = note.title;
-    htmlContent.innerHTML = note.content;
-    htmlData.innerHTML = note.createDate.toLocaleString();
-    htmlButton.innerHTML = 'Remove';
-    htmlButton.classList.add('remove');
-    htmlButton.onclick = ((id)=>{removeNote(id)});
-
-    htmlSection.appendChild(htmlTitle);
-    htmlSection.appendChild(htmlContent);
-    htmlSection.appendChild(htmlData);
-    htmlSection.appendChild(htmlButton);
-
-    asidenotes.appendChild(htmlSection);
-    }
-    if(note.pinned === false) {
-        
-    const htmlSection = document.createElement('section');
-    const htmlTitle = document.createElement('h1');
-    const htmlContent = document.createElement('p');
-    const htmlData = document.createElement('time');
-    const htmlButton = document.createElement('button');
-
-    htmlSection.style.backgroundColor = note.colour;
-
-    htmlTitle.innerHTML = note.title;
-    htmlContent.innerHTML = note.content;
-    htmlData.innerHTML = note.createDate.toLocaleString();
-    htmlButton.innerHTML = 'Remove';
-    htmlButton.classList.add('remove');
-    htmlButton.onclick = ((id)=>{removeNote(id)});
-
-    htmlSection.appendChild(htmlTitle);
-    htmlSection.appendChild(htmlContent);
-    htmlSection.appendChild(htmlData);
-    htmlSection.appendChild(htmlButton);
-
-    mainnotes.appendChild(htmlSection);
-    }
+function SaveInLocalStorage(){
+    localStorage.setItem(localStorageNotesKey, JSON.stringify(notes));
 }
+
+function LoadFromLocalStorage(){
+    const notesFromStorage = JSON.parse(localStorage.getItem(localStorageNotesKey));
+    converted = notesFromStorage.map( note => {
+        note.createDate = new Date(note.createDate);
+        return note;
+    });
+    return converted;
+}
+
 function removeNote(id) {
-    let noteToRemove = id.target.parentNode;
-        noteToRemove.parentNode.removeChild(noteToRemove)
-        notes.splice(id,1)
-        localStorage.setItem('notes',JSON.stringify(notes))
+        notes = notes.filter(note => note.id !== id);
+
+        // notes.splice(id,1)
+        SaveInLocalStorage();
+        // LoadFromLocalStorage();
+        const aside = document.querySelector('aside');
+        const main = document.querySelector('main');
+        document.getElementById(id).remove();
+        // aside.innerHTML=("Przypięte")
+        // main.innerHTML=("Nierzypięte")
+        // CreateNote()
 }
 
+function CreateNote() {
+    const converted = LoadFromLocalStorage();
+    console.log(converted);
+
+    for (const note of converted) {
+        renderNote(note);
+    }
+}
+
+function renderNote(note) {
+    const htmlSection = document.createElement('section');
+    const htmlTitle = document.createElement('h1');
+    const htmlContent = document.createElement('p');
+    const htmlData = document.createElement('time');
+    const htmlButton = document.createElement('button');
+
+    htmlSection.id = note.id;
+    htmlSection.style.backgroundColor = note.colour;
+
+    htmlTitle.innerHTML = note.title;
+    htmlContent.innerHTML = note.content;
+    htmlData.innerHTML = note.createDate.toLocaleString();
+    htmlButton.classList.add('remove');
+    htmlButton.onclick = () => removeNote(note.id);
+    htmlButton.innerHTML = 'Remove';
+
+    htmlSection.appendChild(htmlTitle);
+    htmlSection.appendChild(htmlContent);
+    htmlSection.appendChild(htmlData);
+    htmlSection.appendChild(htmlButton);
+
+    if(note.pinned) {
+        asidenotes.appendChild(htmlSection);
+    } else {
+        mainnotes.appendChild(htmlSection);
+    }
 }
